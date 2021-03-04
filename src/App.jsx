@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
+import AuthService from './services/authService';
+import MessageService from './services/messageService';
 
 function renderMessage(message, currentUser) {
-  const isMyMessage = (currentUser !== null) && (currentUser.uid === message.author?.uid)
+  const isMyMessage = currentUser && (currentUser.uid === message.author?.uid)
   return (
     <div key={message.id} className={isMyMessage ? 'my-message' : 'their-message'}>
       <h2>{message.content}</h2>
@@ -16,28 +18,29 @@ function App() {
   const [currentMessageContent, setCurrentMessageContent] = useState('')
   const [user, setUser] = useState(null)
 
+  useEffect(() => {
+    async function setMessagesFromDB() {
+      const messages = await MessageService.getAllMessages()
+      setMessages(messages)
+    }
+
+    setMessagesFromDB()
+    AuthService.onAuthStateChanged(setUser)
+  }, [])
+
   const updateMessage = (e) => {
     setCurrentMessageContent(e.target.value)
   }
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     const newMessage = {
       id: messages.length,
       content: currentMessageContent,
       author: user
     }
+    setCurrentMessageContent('')
+    await MessageService.sendMessage(newMessage)
     setMessages([...messages, newMessage])
-  }
-
-  const handleLogIn = () => {
-    setUser({
-      uid: '1234qwer',
-      userName: 'user3000'
-    })
-  }
-
-  const handleLogOut = () => {
-    setUser(null)
   }
 
   return (
@@ -45,15 +48,17 @@ function App() {
       <h1>Let's talk about Solution Challenge</h1>
       {
         user
-          ? <div>
+          ?
+          <div>
             Logged in as {user.userName}
             <br />
-            <button onClick={handleLogOut}>Log Out</button>
+            <button onClick={AuthService.LogOut}>Log Out</button>
           </div>
-          : <button onClick={handleLogIn}>Log In with Google</button>
+          :
+          <button onClick={AuthService.LogInWithGoogle}>Log In with Google</button>
       }
       <br />
-      <input type="text" onChange={updateMessage} />
+      <input type="text" value={currentMessageContent} onChange={updateMessage} />
       <button onClick={sendMessage}>Send</button>
       { messages.map(message => renderMessage(message, user))}
     </div>
