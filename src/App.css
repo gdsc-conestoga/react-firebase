@@ -1,3 +1,7 @@
-.complete {
-  text-decoration: line-through;
+.my-message {
+  background-color: goldenrod;
+}
+
+.their-message {
+  background-color: gainsboro;
 }
