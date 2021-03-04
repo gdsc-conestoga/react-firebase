@@ -1,17 +1,9 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import Message from './components/Message';
+import Profile from './components/Profile';
 import AuthService from './services/authService';
 import MessageService from './services/messageService';
-
-function renderMessage(message, currentUser) {
-  const isMyMessage = currentUser && (currentUser.uid === message.author?.uid)
-  return (
-    <div key={message.id} className={isMyMessage ? 'my-message' : 'their-message'}>
-      <h2>{message.content}</h2>
-      <p>{message.author?.userName || 'someone'}</p>
-    </div>
-  )
-}
 
 function App() {
   const [messages, setMessages] = useState([])
@@ -47,23 +39,13 @@ function App() {
   return (
     <div className="App">
       <h1>Let's talk about Solution Challenge</h1>
-      {
-        user
-          ?
-          <div>
-            Logged in as {user.userName}
-            <br />
-            <button onClick={AuthService.LogOut}>Log Out</button>
-          </div>
-          :
-          <button onClick={AuthService.LogInWithGoogle}>Log In with Google</button>
-      }
+      <Profile user={user} />
       <br />
       <form onSubmit={sendMessage}>
         <input type="text" value={currentMessageContent} onChange={updateMessage} />
         <button onClick={sendMessage}>Send</button>
       </form>
-      { messages.map(message => renderMessage(message, user))}
+      { messages.map(message => (<Message message={message} currentUser={user} />)) }
     </div>
   );
 }
