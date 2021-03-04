@@ -1,6 +1,6 @@
 .Message {
     padding: 1em;
-    margin: 1em;
+    margin: 0.5em 1em 0em 1em;
     border: 1px solid white;
     border-radius: 10px;
     width: fit-content;
