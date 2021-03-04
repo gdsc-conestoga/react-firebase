@@ -32,7 +32,8 @@ function App() {
     setCurrentMessageContent(e.target.value)
   }
 
-  const sendMessage = async () => {
+  const sendMessage = async (e) => {
+    e.preventDefault()
     const newMessage = {
       id: messages.length,
       content: currentMessageContent,
@@ -58,8 +59,10 @@ function App() {
           <button onClick={AuthService.LogInWithGoogle}>Log In with Google</button>
       }
       <br />
-      <input type="text" value={currentMessageContent} onChange={updateMessage} />
-      <button onClick={sendMessage}>Send</button>
+      <form onSubmit={sendMessage}>
+        <input type="text" value={currentMessageContent} onChange={updateMessage} />
+        <button onClick={sendMessage}>Send</button>
+      </form>
       { messages.map(message => renderMessage(message, user))}
     </div>
   );
