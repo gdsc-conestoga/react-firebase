@@ -41,11 +41,13 @@ function App() {
       <h1>Let's talk about Solution Challenge</h1>
       <Profile user={user} />
       <br />
-      <form onSubmit={sendMessage}>
-        <input type="text" value={currentMessageContent} onChange={updateMessage} />
-        <button onClick={sendMessage}>Send</button>
+      <form onSubmit={sendMessage} className="message-form">
+        <input className="message-input" type="text" value={currentMessageContent} onChange={updateMessage} placeholder="Your message..."/>
+        <button onClick={sendMessage} className="button message-button">Send</button>
       </form>
-      { messages.map(message => (<Message message={message} currentUser={user} />)) }
+      <div className="message-list">
+        { messages.map(message => (<Message message={message} currentUser={user} />)) }
+      </div>
     </div>
   );
 }

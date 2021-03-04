@@ -1,7 +1,27 @@
-.my-message {
-  background-color: goldenrod;
+.App {
+  padding: 3em;
+  background: inherit;
 }
 
-.their-message {
-  background-color: gainsboro;
+.message-form {
+  display: flex;
+}
+
+.message-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid white;
+  outline: none;
+  padding: 0.5em;
+  font-size: 1.1em;
+  width: 100%;
+}
+
+.message-button {
+  margin-left: 1em;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column-reverse;
 }

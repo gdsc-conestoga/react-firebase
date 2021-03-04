@@ -1,0 +1,24 @@
+.Message {
+    padding: 1em;
+    margin: 1em;
+    border: 1px solid white;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.my-message {
+    align-self: flex-end;
+}
+
+.my-message > p {
+    text-align: right;    
+}
+
+.their-message {
+    align-self: flex-start;
+}
+
+.their-message > p {
+    text-align: left;
+}
+  
