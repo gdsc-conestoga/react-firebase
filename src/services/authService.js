@@ -7,7 +7,7 @@ export default class AuthService {
     static async LogInWithGoogle() {
         AuthService.user = await new Promise((resolve, reject) => resolve({
             uid: '1234qwer',
-            userName: 'user3000'
+            displayName: 'user3000'
         }))
         AuthService.authStateCallback(AuthService.user)
     }

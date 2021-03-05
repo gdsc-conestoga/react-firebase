@@ -11,12 +11,7 @@ function App() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    async function setMessagesFromDB() {
-      const messages = await MessageService.getAllMessages()
-      setMessages(messages)
-    }
-
-    setMessagesFromDB()
+    MessageService.listenForMessages(setMessages)
     AuthService.onAuthStateChanged(setUser)
   }, [])
 
@@ -26,14 +21,22 @@ function App() {
 
   const sendMessage = async (e) => {
     e.preventDefault()
+    const author = user 
+    ? {
+      uid: user.uid,
+      displayName: user.displayName
+    }
+    : null
+
     const newMessage = {
       id: messages.length,
       content: currentMessageContent,
-      author: user
+      author
     }
-    setCurrentMessageContent('')
+
     await MessageService.sendMessage(newMessage)
-    setMessages([...messages, newMessage])
+
+    setCurrentMessageContent('')
   }
 
   return (

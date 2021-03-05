@@ -6,7 +6,7 @@ export default function Message(props) {
     return (
         <div key={props.message.id} className={'Message ' + (isMyMessage ? 'my-message' : 'their-message')}>
             <h2>{props.message.content}</h2>
-            <p>{props.message.author?.userName || 'someone'}</p>
+            <p>{props.message.author?.displayName || 'someone'}</p>
         </div>
     )
 }

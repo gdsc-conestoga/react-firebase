@@ -1,9 +1,12 @@
 export default class MessageService {
-    static getAllMessages() {
-        return new Promise((resolve, reject) => resolve([]))
+    static listenForMessages(callback) {
+        MessageService.messagesStateCallback = callback
     }
 
-    static sendMessage(message) {
-        return new Promise((resolve, reject) => resolve(true))
+    static async sendMessage(message) {
+        await new Promise((resolve, reject) => resolve(true))
+        MessageService.messages = MessageService.messages ?? []
+        MessageService.messages.push(message)
+        MessageService.messagesStateCallback(MessageService.messages)
     }
 }

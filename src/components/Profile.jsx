@@ -5,7 +5,7 @@ import './Profile.css'
 export default function Profile(props) {
     const getLoggedInState = () => (
         <div>
-            {props.user.userName}
+            {props.user.displayName}
             <br/>
             <button onClick={AuthService.LogOut}>Log Out</button>
         </div>
