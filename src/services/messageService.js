@@ -1,9 +1,16 @@
+import firebase from 'firebase'
+
 export default class MessageService {
-    static getAllMessages() {
-        return new Promise((resolve, reject) => resolve([]))
+    static subscribeToMessages(callback) {
+        const db = firebase.firestore()
+        db.collection('messages').orderBy('timestamp').onSnapshot(snap => {
+            const messages = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+            callback(messages)
+        })
     }
 
-    static sendMessage(message) {
-        return new Promise((resolve, reject) => resolve(true))
+    static async sendMessage(message) {
+        const db = firebase.firestore()
+        await db.collection('messages').add(message)
     }
 }

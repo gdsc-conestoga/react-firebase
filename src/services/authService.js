@@ -1,19 +1,27 @@
+import firebase from 'firebase'
+
 export default class AuthService {
     static onAuthStateChanged(callback) {
-        AuthService.authStateCallback = callback
-        callback(AuthService.user)
+        firebase.auth().onAuthStateChanged(user => {
+            console.log(user)
+            callback(user)
+        })
     }
 
     static async LogInWithGoogle() {
-        AuthService.user = await new Promise((resolve, reject) => resolve({
-            uid: '1234qwer',
-            userName: 'user3000'
-        }))
-        AuthService.authStateCallback(AuthService.user)
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+
+        // AuthService.user = await new Promise((resolve, reject) => resolve({
+        //     uid: '1234qwer',
+        //     displayName: 'user3000'
+        // }))
+        // AuthService.authStateCallback(AuthService.user)
     }
 
     static async LogOut() {
-        AuthService.user = null
-        AuthService.authStateCallback(AuthService.user)
+        await firebase.auth().signOut();
+        // AuthService.user = null
+        // AuthService.authStateCallback(AuthService.user)
     }
 }
