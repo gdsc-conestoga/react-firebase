@@ -29,3 +29,5 @@
 ## Resources
 
 - If you have any questions feel free to join the [Think Outside the Valley Discord](http://bit.ly/disctotv)
+- [Extensive DSC Firebase Series](http://bit.ly/totv-fire)
+- [Firebase Docs](https://firebase.google.com/docs)
