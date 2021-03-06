@@ -1,5 +1,7 @@
 # Firebase-React integration
 
+This is a simple chat application that helps you understand how Firebase could be integrated with React.
+
 ## Run the project
 
 ### React setup
